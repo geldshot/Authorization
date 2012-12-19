@@ -1,4 +1,5 @@
 <?php
+session_start();
 $require_once "authorizeAPI.php";
 $api = new AuthorizeAPI();
 if(isset($_POST['command']){

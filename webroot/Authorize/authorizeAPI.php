@@ -56,6 +56,9 @@ class AuthorizeAPI{
 				else
 					$outPut = "AUTHORIZEAPI: missing request information";
 				break;
+			case "logout":
+				$this->model->logout();
+				break;
 			default:
 				$outPut = "AUTHORIZEAPI: invalid command";
 				break;

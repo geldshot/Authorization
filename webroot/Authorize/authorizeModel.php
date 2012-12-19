@@ -81,5 +81,9 @@ class AuthorizeModel{
 		return true;
 	}
 	
+	public function logout(){
+		session_destroy();
+	}
+	
 }
 ?>
