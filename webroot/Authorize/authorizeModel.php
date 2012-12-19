@@ -14,10 +14,7 @@ class AuthorizeModel{
 	public function login($name, $pass){
 		$db = $this->dbConnect;
 		
-		if(strpos($name, '@') === false)
-			$userID = $db->getUserIDName($name, $pass);
-		else
-			$userID = $db->getUserIDEmail($name, $pass);
+		$userID = $db->getUserID($name, $pass);
 			
 		if($userID === false){
 			$this->addError($db->getError());
@@ -72,14 +69,16 @@ class AuthorizeModel{
 	
 	public function requestpass($email){
 		$db = $this->dbConnect;
-		$salt = $db->getSalt();
-		$key = time() + $salt;
-		if($db->addKey($email, $key)){
-			$str = "please visit the following url to reset your password: " . $_SERVER['SERVER_NAME'] . "/passreset?key={$key}";
+		
+		$key = time();
+		if(!($key = $db->addKey($email, $key))){
+			$this->addError($db->getError());
+			return false;
+		}
+		
+		$str = "please visit the following url to reset your password: " . $_SERVER['SERVER_NAME'] . "/passreset?key={$key}";
 		mail($email, "password reset", $str);
 		return true;
-		
-		}
 	}
 	
 }
