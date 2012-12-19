@@ -8,6 +8,7 @@ class AuthorizeModel{
 	public function AuthorizeModel(){
 		$this->error = new array();
 		$this->dbConnect = new DBConnect();
+		return $this;
 	}
 	
 	public function login($name, $pass){
