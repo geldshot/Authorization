@@ -12,7 +12,7 @@ class AuthorizeAPI{
 		$this->webInput = "";
 	}
 	
-	public function Process($webInput){
+	public function process($webInput){
 		$this->webInput = $webInput;
 		switch($webInput['command'])
 			case "login":
@@ -37,8 +37,8 @@ class AuthorizeAPI{
 					$outPut = "AUTHORIZEAPI: missing registration information";
 				break;
 			case "changepass":
-				if(isset($webInput['username']) && isset($webInput['email']) && isset($webInput['key']) && isset($webInput['password'])){
-					if(($this->model->login($webInput['username'], $webInput['password']))
+				if(isset($webInput['email']) && isset($webInput['key']) && isset($webInput['password'])){
+					if(($this->model->changepass($webInput['email'], $webInput['key'], $webInput['password']))
 						$outPut = "success";
 					else
 						$outPut = "AUTHORIZEAPI: changepass failed";
@@ -46,9 +46,9 @@ class AuthorizeAPI{
 				else
 					$outPut = "AUTHORIZEAPI: missing changepass information";
 				break;
-			case "passrequest":
-				if(isset($webInput['username'])){
-					if(($this->model->request($webInput['username']))
+			case "requestpass":
+				if(isset($webInput['email'])){
+					if(($this->model->requestpass($webInput['email']))
 						$outPut = "success";
 					else
 						$outPut = "AUTHORIZEAPI: request failed";
@@ -61,13 +61,13 @@ class AuthorizeAPI{
 				break;
 	}
 	
-	public function Error(){
+	public function error(){
 		echo $webInput . "<br/>\n";
 		echo $model->Error() . "<br/>\n";
 		echo $outPut . "<br/>\n";
 	}
 	
-	public function OutPut(){
+	public function output(){
 		echo $outPut;
 	}
 }
